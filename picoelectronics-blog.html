@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Products - PicoElectronics | Electronic Components Catalog</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+			line-height: 1.6;
+			color: #333;
+			overflow-x: hidden;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		/* Header */
+		header {
+			background: rgba(255, 255, 255, 0.98);
+			backdrop-filter: blur(10px);
+			box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+			position: fixed;
+			width: 100%;
+			top: 0;
+			z-index: 999;
+			transition: all 0.3s ease;
+		}
+
+		nav {
+			max-width: 1600px;
+			margin: 0 auto;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1rem 2rem;
+			gap: 2rem;
+		}
+
+		.logo {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			text-decoration: none;
+			transition: all 0.3s ease;
+			flex-shrink: 0;
+		}
+
+		.logo img {
+			height: 50px;
+			width: auto;
+		}
+
+		.logo-text {
+			font-size: 1.5rem;
+			font-weight: bold;
+			color: #1a2f4d;
+			letter-spacing: -0.5px;
+		}
+
+		.logo:hover {
+			transform: scale(1.05);
+		}
+
+		.nav-center {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex: 1;
+		}
+
+		.search-box {
+			display: flex;
+			align-items: center;
+			background: #f5f5f5;
+			border-radius: 25px;
+			padding: 8px 20px;
+			transition: all 0.3s ease;
+		}
+
+		.search-box:focus-within {
+			background: #fff;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+		}
+
+		.search-box input {
+			border: none;
+			background: none;
+			outline: none;
+			padding: 5px;
+			width: 300px;
+			font-size: 0.95rem;
+		}
+
+		.search-box svg {
+			width: 18px;
+			height: 18px;
+			color: #666;
+			cursor: pointer;
+			transition: color 0.3s ease;
+		}
+
+		.search-box svg:hover {
+			color: #1a2f4d;
+		}
+
+		.nav-links {
+			display: flex;
+			list-style: none;
+			gap: 2rem;
+			align-items: center;
+			flex-shrink: 0;
+		}
+
+		.nav-links a {
+			color: #333;
+			text-decoration: none;
+			font-weight: 500;
+			transition: all 0.3s ease;
+			position: relative;
+			padding: 0.5rem 0;
+		}
+
+		.nav-links a::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 0;
+			height: 2px;
+			background: linear-gradient(90deg, #1a2f4d, #2c4563);
+			transition: width 0.3s ease;
+		}
+
+		.nav-links a:hover::after,
+		.nav-links a.active::after {
+			width: 100%;
+		}
+
+		.nav-links a:hover,
+		.nav-links a.active {
+			color: #1a2f4d;
+		}
+
+		/* Main Container */
+		.main-container {
+			display: flex;
+			max-width: 1600px;
+			margin: 90px auto 0;
+			padding: 2rem;
+			gap: 2rem;
+		}
+
+		/* Sidebar Filters */
+		.sidebar {
+			width: 280px;
+			flex-shrink: 0;
+			position: sticky;
+			top: 100px;
+			height: fit-content;
+			animation: slideInLeft 0.6s ease-out;
+		}
+
+		@keyframes slideInLeft {
+			from {
+				opacity: 0;
+				transform: translateX(-30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		.filter-section {
+			background: white;
+			border: 1px solid #e0e0e0;
+			border-radius: 12px;
+			padding: 1.5rem;
+			margin-bottom: 1.5rem;
+			transition: all 0.3s ease;
+			box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+		}
+
+		.filter-section:hover {
+			box-shadow: 0 5px 20px rgba(0, 102, 204, 0.1);
+			transform: translateY(-2px);
+		}
+
+		.filter-section h3 {
+			font-size: 1.1rem;
+			color: #333;
+			margin-bottom: 1rem;
+			padding-bottom: 0.5rem;
+			border-bottom: 2px solid #1a2f4d;
+		}
+
+		.filter-search {
+			width: 100%;
+			padding: 8px 12px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			font-size: 0.9rem;
+			margin-bottom: 1rem;
+		}
+
+		.filter-options {
+			max-height: 300px;
+			overflow-y: auto;
+		}
+
+		.filter-option {
+			display: flex;
+			align-items: center;
+			padding: 0.5rem 0;
+			cursor: pointer;
+			transition: all 0.2s;
+		}
+
+		.filter-option:hover {
+			padding-left: 5px;
+		}
+
+		.filter-option input[type="checkbox"] {
+			margin-right: 10px;
+			cursor: pointer;
+		}
+
+		.filter-option label {
+			cursor: pointer;
+			font-size: 0.95rem;
+			color: #555;
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+		}
+
+		.filter-count {
+			color: #999;
+			font-size: 0.85rem;
+		}
+
+		.clear-filters {
+			background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+			border: 2px solid #ddd;
+			padding: 10px 16px;
+			border-radius: 8px;
+			cursor: pointer;
+			width: 100%;
+			font-size: 0.95rem;
+			color: #666;
+			margin-top: 1rem;
+			transition: all 0.3s ease;
+			font-weight: 600;
+		}
+
+		.clear-filters:hover {
+			background: linear-gradient(135deg, #1a2f4d, #2c4563);
+			color: white;
+			border-color: #1a2f4d;
+			transform: translateY(-2px);
+			box-shadow: 0 4px 15px rgba(0, 102, 204, 0.2);
+		}
+
+		/* Products Content */
+		.products-content {
+			flex: 1;
+		}
+
+		.products-header {
+			background: white;
+			border: 1px solid #e0e0e0;
+			border-radius: 8px;
+			padding: 1.5rem;
+			margin-bottom: 2rem;
+		}
+
+		.products-header h1 {
+			font-size: 2rem;
+			color: #333;
+			margin-bottom: 0.5rem;
+		}
+
+		.results-info {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 1rem;
+			padding-top: 1rem;
+			border-top: 1px solid #f0f0f0;
+		}
+
+		.results-count {
+			color: #666;
+			font-size: 0.95rem;
+		}
+
+		.sort-options {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+		}
+
+		.sort-options select {
+			padding: 10px 15px;
+			border: 2px solid #ddd;
+			border-radius: 8px;
+			font-size: 0.95rem;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			background: white;
+			font-weight: 500;
+		}
+
+		.sort-options select:hover {
+			border-color: #1a2f4d;
+			box-shadow: 0 2px 10px rgba(0, 102, 204, 0.1);
+		}
+
+		.sort-options select:focus {
+			outline: none;
+			border-color: #1a2f4d;
+			box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+		}
+
+		/* Product Grid */
+		.product-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+			gap: 1.5rem;
+		}
+
+		.product-card {
+			background: white;
+			border: 1px solid #e0e0e0;
+			border-radius: 12px;
+			padding: 1.5rem;
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			cursor: pointer;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.product-card::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 3px;
+			background: linear-gradient(90deg, #1a2f4d, #2c4563);
+			transform: scaleX(0);
+			transition: transform 0.4s ease;
+		}
+
+		.product-card:hover::before {
+			transform: scaleX(1);
+		}
+
+		.product-card:hover {
+			box-shadow: 0 15px 40px rgba(0, 102, 204, 0.15);
+			border-color: #1a2f4d;
+			transform: translateY(-8px);
+		}
+
+		.product-image {
+			width: 100%;
+			height: 180px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: #ffffff;
+			border-radius: 8px;
+			margin-bottom: 1rem;
+			position: relative;
+			overflow: hidden;
+			border: 1px solid #e0e0e0;
+			padding: 10px;
+		}
+
+		/* No hover effect on product image */
+
+		.product-image svg,
+		.product-image img {
+			max-width: 100%;
+			max-height: 100%;
+			width: auto;
+			height: auto;
+			object-fit: contain;
+			position: relative;
+			z-index: 1;
+		}
+
+		.product-manufacturer {
+			font-size: 0.95rem;
+			color: #1a2f4d;
+			margin-bottom: 0.5rem;
+			font-weight: 600;
+		}
+
+		.product-mpn {
+			font-size: 1.1rem;
+			color: #1a1a1a;
+			margin-bottom: 0.5rem;
+			font-weight: 600;
+		}
+
+		.product-description {
+			font-size: 0.85rem;
+			color: #666;
+			margin-bottom: 1rem;
+			line-height: 1.4;
+			min-height: 40px;
+		}
+
+		.product-packaging {
+			font-size: 0.85rem;
+			color: #28a745;
+			margin-bottom: 0.3rem;
+			font-weight: 500;
+		}
+
+		.product-footer {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding-top: 1rem;
+			border-top: 1px solid #f0f0f0;
+		}
+
+		.product-price {
+			font-size: 1.3rem;
+			color: #1a2f4d;
+			font-weight: bold;
+		}
+
+		.inquiry-btn {
+			background: linear-gradient(135deg, #1a2f4d, #2c4563);
+			color: white;
+			border: none;
+			padding: 10px 24px;
+			border-radius: 25px;
+			cursor: pointer;
+			font-weight: 600;
+			transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			font-size: 0.95rem;
+			box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.inquiry-btn::before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 0;
+			height: 0;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.3);
+			transform: translate(-50%, -50%);
+			transition: width 0.6s, height 0.6s;
+		}
+
+		.inquiry-btn:hover::before {
+			width: 200px;
+			height: 200px;
+		}
+
+		.inquiry-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
+		}
+
+		/* Footer */
+		footer {
+			background: #1a2f4d;
+			color: white;
+			padding: 3rem 2rem 1rem;
+			margin-top: 4rem;
+		}
+
+		.footer-content {
+			max-width: 1400px;
+			margin: 0 auto;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 2rem;
+			margin-bottom: 2rem;
+		}
+
+		.footer-section h4 {
+			color: #1a2f4d;
+			margin-bottom: 1rem;
+			font-size: 1.1rem;
+		}
+
+		.footer-section ul {
+			list-style: none;
+		}
+
+		.footer-section ul li {
+			margin-bottom: 0.5rem;
+		}
+
+		.footer-section a {
+			color: #ccc;
+			text-decoration: none;
+			transition: color 0.3s;
+		}
+
+		.footer-section a:hover {
+			color: #1a2f4d;
+		}
+
+		.footer-bottom {
+			max-width: 1400px;
+			margin: 0 auto;
+			text-align: center;
+			padding-top: 2rem;
+			border-top: 1px solid #333;
+			color: #999;
+		}
+
+		/* Responsive */
+		@media (max-width: 1024px) {
+			.sidebar {
+				display: none;
+			}
+		}
+
+		@media (max-width: 768px) {
+			.product-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.nav-links {
+				display: none;
+			}
+		}
+	</style>
+</head>
+<body>
+	<!-- Header -->
+	<header>
+		<nav>
+			<a href="index.html" class="logo">
+				<img src="image/logo.png" alt="PicoElectronics Logo">
+				<span class="logo-text">PicoElectronics</span>
+			</a>
+			<div class="nav-center">
+				<div class="search-box">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+					</svg>
+					<input type="text" placeholder="Search part numbers, manufacturers...">
+				</div>
+			</div>
+			<ul class="nav-links">
+				<li><a href="picoelectronics-services.html">Services</a></li>
+				<li><a href="picoelectronics-products.html">Products</a></li>
+				<li><a href="picoelectronics-blog.html" class="active">Blog</a></li>
+				<li><a href="picoelectronics-about.html">About</a></li>
+				<li><a href="picoelectronics-contact.html">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<!-- Main Container -->
+	<div class="main-container">
+		<!-- Sidebar Filters -->
+		<aside class="sidebar">
+			<!-- Category Filter -->
+			<div class="filter-section">
+				<h3>Category</h3>
+				<div class="filter-options" id="categoryFilters">
+					<div class="filter-option">
+						<input type="checkbox" id="cat-market" value="Market Intelligent">
+						<label for="cat-market">
+							<span>Market Intelligent</span>
+						</label>
+					</div>
+					<div class="filter-option">
+						<input type="checkbox" id="cat-manufacturer" value="Manufacturer">
+						<label for="cat-manufacturer">
+							<span>Manufacturer</span>
+						</label>
+					</div>
+					<div class="filter-option">
+						<input type="checkbox" id="cat-product" value="Product">
+						<label for="cat-product">
+							<span>Product</span>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<button class="clear-filters" onclick="clearFilters()">Clear All Filters</button>
+		</aside>
+
+		<!-- Products Content -->
+		<main class="products-content">
+			<div class="product-grid" id="productGrid" style="display:block;width:100%;">
+				<div style="margin-bottom:1.5rem;">
+					<h2 style="font-size:1.35rem;color:#1a2f4d;font-weight:700;margin-bottom:0.5rem;text-transform:capitalize;">Article</h2>
+					<div style="height:2px;background:#1a2f4d;width:100%;"></div>
+				</div>
+				<ul style="list-style:none;padding:0;margin:0;">
+					<li class="blog-article" data-category="Market Intelligent" style="display:flex;align-items:center;padding:0.7rem 0;border-bottom:1px solid #f0f0f0;">
+						<a href="blog-article-1.html" target="_blank" style="font-size:1.08rem;color:#1a2f4d;text-decoration:none;font-weight:500;line-height:1.4;text-align:left;flex:1;min-width:0;word-break:break-word;">Global Semiconductor Market Set to Explode 25% in 2026</a>
+						<span style="color:#888;font-size:1rem;white-space:nowrap;margin-left:1.5rem;">2025-12-03</span>
+					</li>
+					<li class="blog-article" data-category="Market Intelligent" style="display:flex;align-items:center;padding:0.7rem 0;border-bottom:1px solid #f0f0f0;">
+						<a href="blog-article-2.html" target="_blank" style="font-size:1.08rem;color:#1a2f4d;text-decoration:none;font-weight:500;line-height:1.4;text-align:left;flex:1;min-width:0;word-break:break-word;">The AI frenzy is driving a memory chip supply crisis</a>
+						<span style="color:#888;font-size:1rem;white-space:nowrap;margin-left:1.5rem;">2025-12-03</span>
+					</li>
+				</ul>
+			</div>
+			<script>
+			function filterArticles() {
+				var checkboxes = document.querySelectorAll('#categoryFilters input[type="checkbox"]');
+				var articles = document.querySelectorAll('.blog-article');
+				var selectedCategories = [];
+				
+				checkboxes.forEach(function(cb) {
+					if (cb.checked) {
+						selectedCategories.push(cb.value);
+					}
+				});
+				
+				articles.forEach(function(article) {
+					if (selectedCategories.length === 0) {
+						article.style.display = 'block';
+					} else if (selectedCategories.includes(article.getAttribute('data-category'))) {
+						article.style.display = 'block';
+					} else {
+						article.style.display = 'none';
+					}
+				});
+			}
+			
+			function clearFilters() {
+				var checkboxes = document.querySelectorAll('#categoryFilters input[type="checkbox"]');
+				checkboxes.forEach(function(cb) {
+					cb.checked = false;
+				});
+				filterArticles();
+			}
+			
+			document.addEventListener('DOMContentLoaded', function() {
+				var checkboxes = document.querySelectorAll('#categoryFilters input[type="checkbox"]');
+				checkboxes.forEach(function(cb) {
+					cb.addEventListener('change', filterArticles);
+				});
+			});
+			</script>
+		</main>
+	</div>
+
+	<footer>
+		<div class="footer-content">
+			<div class="footer-section">
+				<h4>Products</h4>
+				<ul>
+					<li><a href="picoelectronics-products.html">All Products</a></li>
+					<li><a href="picoelectronics-products.html">Integrated Circuits</a></li>
+					<li><a href="picoelectronics-products.html">Power Management</a></li>
+					<li><a href="picoelectronics-products.html">Microcontrollers</a></li>
+				</ul>
+			</div>
+			<div class="footer-section">
+				<h4>Services</h4>
+				<ul>
+					<li><a href="picoelectronics-services.html">Component Sourcing</a></li>
+					<li><a href="picoelectronics-services.html">Cost Optimization</a></li>
+					<li><a href="picoelectronics-services.html">Inventory Management</a></li>
+					<li><a href="picoelectronics-services.html">Excess Mitigation</a></li>
+				</ul>
+			</div>
+			<div class="footer-section">
+				<h4>Company</h4>
+				<ul>
+					<li><a href="picoelectronics-about.html">About Us</a></li>
+					<li><a href="picoelectronics-about.html">Quality & Certifications</a></li>
+					<li><a href="picoelectronics-contact.html">Contact Us</a></li>
+				</ul>
+			</div>
+			<div class="footer-section">
+				<h4>Support</h4>
+				<ul>
+					<li><a href="picoelectronics-contact.html">Request Quote</a></li>
+					<li><a href="picoelectronics-contact.html">Technical Support</a></li>
+					<li><a href="#">Help Center</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<p>&copy; 2025 PicoElectronics. All rights reserved. | Professional IC Components Distributor</p>
+		</div>
+	</footer>
+</body>
+</html>
